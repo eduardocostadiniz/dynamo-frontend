@@ -1,0 +1,38 @@
+
+.table {
+    background-color: #F6FAFA;
+    border-spacing: 0;
+    border-radius: 3px;
+    width: 100%;
+    margin: 5px;
+    padding: 2px;
+}
+
+.tableHeader {
+    background-color: cornflowerblue;
+    color: whitesmoke;
+    height: 35px;
+}
+
+.tableRow {
+    height: 40px;
+}
+
+.tableRow:nth-child(even) {
+    background-color: #DFEEEF;
+  }
+
+.tableHeadItem {
+    text-align: left;
+    padding-left: 10px;
+    font-weight: bold;
+    min-width: 120px;
+}
+
+.tableBody {
+    font-weight: normal;
+}
+
+.tableBodyItem {
+    font-weight: normal;
+}

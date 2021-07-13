@@ -1,17 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+
+import './globals.scss'
+
+import Container from './pages/Container'
+import Main from './pages/Main'
+import { TableDetails } from './pages/TableDetails'
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Container>
+      <Router>
+        <Switch>
+          <Route path='/tables' exact component={Main} />
+          <Route path='/tables/:name' exact component={TableDetails} />
+          <Redirect to='/tables' />
+        </Switch>
+      </Router>
+    </Container>
   </React.StrictMode>,
   document.getElementById('root')
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
