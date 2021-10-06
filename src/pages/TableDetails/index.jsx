@@ -7,7 +7,6 @@ import { TableData } from './TableData'
 import './styles.scss'
 
 import tablesService from '../../services/tables'
-import Text from '../../components/Text'
 
 function TableDetails() {
   const { name } = useParams()
@@ -41,12 +40,6 @@ function TableDetails() {
         <TableInfo tableInfo={tableInfo} />
         <TableData tableKeys={tableKeys} tableName={name} />
       </div>
-      < hr />
-      <Text size='small' strong layout='success'>Criar tela de edição de itens na tabela</Text>
-      <Text size='small' strong layout='success'>Criar tela de criação de itens na tabela</Text>
-      <Text size='small' strong layout='success'>Criar tela de adicionar novas tabelas</Text>
-      <Text size='small' strong layout='success'>Criar componente de paginação</Text>
-      <Text size='small' strong layout='success'>Transformar CSS para SCSS (Sass)</Text>
     </div>
   )
 }

@@ -5,6 +5,7 @@ const CONFIG_COLOR = {
   success: styles.successText,
   warning: styles.warningText,
   danger: styles.dangerText,
+  primary: styles.primaryText,
   default: styles.infoText
 }
 

@@ -1,0 +1,46 @@
+
+
+.formularioNovaTabela {
+  width: 600px;
+  margin: auto;
+  padding: 12px;
+
+  p {
+    font-size: 20px;
+  }
+
+  form {
+    align-items: center;
+    margin-left: 5px;
+    padding-left: 2px;
+
+    .fullRow {
+      display: flex;
+      flex-direction: column;
+      margin: 10px 0px 15px 0px;
+    }
+
+    .halfRow {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin: 10px 0px 15px 0px;
+      gap: 10px;
+    }
+
+    button {
+      width: 100%;
+      height: 30px;
+      margin-top: 10px;
+      background-color: royalblue;
+      color: white;
+      border: none;
+      border-radius: 5px;
+
+      &:hover {
+        opacity: 0.85;
+        cursor: pointer;
+      }
+    }
+  }
+}

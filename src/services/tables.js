@@ -19,16 +19,60 @@ const tablesService = {
       console.error(err)
     }
   },
-  listData: async function (tableName, ) {
+  createTable: async function (data) {
+    try {
+      const params = {
+        AttributeDefinitions: [
+          {
+            AttributeName: data.hashKey,
+            AttributeType: data.hashKeyType
+          }
+        ],
+        KeySchema: [
+          {
+            AttributeName: data.hashKey,
+            KeyType: 'HASH'
+          }
+        ],
+        ProvisionedThroughput: {
+          ReadCapacityUnits: data.readCapability,
+          WriteCapacityUnits: data.writeCapability
+        },
+        TableName: data.tableName
+      }
+
+      if (data.rangeKey && data.rangeKeyType) {
+        params['AttributeDefinitions'].push({
+          AttributeName: data.rangeKey,
+          AttributeType: data.rangeKeyType
+        })
+        params['KeySchema'].push({
+          AttributeName: data.rangeKey,
+          KeyType: 'RANGE'
+        })
+      }
+
+      await DynamoDB.createTable(params).promise()
+      return true
+    } catch (err) {
+      console.error(err)
+    }
+  },
+  deleteTable: async function (tableName) {
+    try {
+      await DynamoDB.deleteTable({TableName: tableName}).promise()
+      return true
+    } catch (err) {
+      console.error(err)
+    }
+  },
+  listData: async function (tableName,) {
     try {
       const params = {
         ExpressionAttributeValues: {
-          ':id': {S: 'COMPANY_PROFILES'}
+          ':id': { S: 'KEY' }
         },
-        // IndexName: '',
         KeyConditionExpression: 'id = :id',
-        // ProjectionExpression: 'Episode, Title, Subtitle',
-        // FilterExpression: 'contains (Subtitle, :topic)',
         TableName: tableName
       }
       const response = await DynamoDB.query(params).promise()
@@ -37,16 +81,9 @@ const tablesService = {
       console.error(err)
     }
   },
-  scanData: async function (tableName, ) {
+  scanData: async function (tableName,) {
     try {
       const params = {
-        // ExpressionAttributeValues: {
-        //   ':id': {S: 'COMPANY_PROFILES'}
-        // },
-        // KeyConditionExpression: 'id = :id',
-        // ProjectionExpression: 'Episode, Title, Subtitle',
-        // FilterExpression: 'contains (Subtitle, :topic)',
-        Limit: 10,
         TableName: tableName
       }
       const response = await DynamoDB.scan(params).promise()

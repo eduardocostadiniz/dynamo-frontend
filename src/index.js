@@ -6,6 +6,7 @@ import './globals.scss'
 
 import Container from './pages/Container'
 import Main from './pages/Main'
+import { NewTable } from './pages/NewTable'
 import { TableDetails } from './pages/TableDetails'
 
 ReactDOM.render(
@@ -14,7 +15,8 @@ ReactDOM.render(
       <Router>
         <Switch>
           <Route path='/tables' exact component={Main} />
-          <Route path='/tables/:name' exact component={TableDetails} />
+          <Route path='/tables/new' exact component={NewTable} />
+          <Route path='/tables/details/:name' exact component={TableDetails} />
           <Redirect to='/tables' />
         </Switch>
       </Router>

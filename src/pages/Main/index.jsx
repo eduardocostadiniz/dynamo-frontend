@@ -18,20 +18,43 @@ function NoData() {
 export default function Content() {
   let [tables, setTables] = useState(null)
 
+  async function handleListTables() {
+    const result = await tablesService.listTables()
+    setTables(result)
+  }
+
   useEffect(() => {
-    async function handleListTables() {
-      const result = await tablesService.listTables()
-      setTables(result)
-    }
     handleListTables()
 
     return setTables([])
   }, [])
 
+  async function handleDeleteTable(tableName) {
+    try {
+      const confirmation = window.confirm(`Deseja realmente excluir a tabela ${tableName}`)
+      if (!confirmation) {
+        return
+      }
+
+      await tablesService.deleteTable(tableName)
+      handleListTables()
+
+    } catch (error) {
+      if (error && error.code === 'ResourceNotFoundException') {
+        console.log("Error: Table not found")
+      } else if (error && error.code === 'ResourceInUseException') {
+        console.log("Error: Table in use")
+      } else {
+        console.log(error)
+      }
+    }
+  }
+
   return (
     <div className='content'>
       <div className='titleContainer'>
         <Text strong size='big'>TABELAS</Text>
+        <LinkWrapper href='/tables/new' type='primary'>Nova Tabela</LinkWrapper>
       </div>
       <Table hasData={!!tables} placeholder={<NoData />}>
         <TableHead>
@@ -44,10 +67,10 @@ export default function Content() {
           {tables && tables.map(el =>
             <TableRow key={el}>
               <TableBodyItem>
-                <LinkWrapper href={`/tables/${el}`}>{el}</LinkWrapper>
+                <LinkWrapper href={`/tables/details/${el}`}>{el}</LinkWrapper>
               </TableBodyItem>
               <TableBodyItem className='tableOperations'>
-                <Button onClick={() => ''} size='small' layout='danger'>Excluir</Button>
+                <Button onClick={() => handleDeleteTable(el)} size='small' layout='danger'>Excluir</Button>
               </TableBodyItem>
             </TableRow>
           )}

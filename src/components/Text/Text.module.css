@@ -32,6 +32,10 @@
     color: #DD3636;
 }
 
+.primaryText {
+    color: royalblue;
+}
+
 .leftText {
     text-align: left;
 }
