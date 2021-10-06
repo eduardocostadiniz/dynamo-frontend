@@ -1,0 +1,62 @@
+
+.containerDetails {
+  display: flex;
+  justify-content: space-around;
+  margin: 10px 2px;
+}
+
+.tableDetails {
+  width: 25%;
+  background-color: #DFEEEF;
+  margin-left: 3px;
+  margin-top: 7px;
+  padding-top: 10px;
+  border-radius: 5px;
+}
+
+.tableData {
+  width: 75%;
+}
+
+.svgActions {
+  display: flex;
+  justify-content: center;
+  padding-left: 5px;
+  gap: 5px;
+}
+
+.svgIcon {
+  width: 25px;
+  height: 25px;
+  padding: 3px;
+  cursor: pointer;
+
+  &:hover {
+    border-radius: 5px;
+    opacity: 0.5;
+  }
+
+  &.default {
+    &:hover {
+      background-color: lightgray;
+    }
+  }
+
+  &.edit {
+    &:hover {
+      background-color: lightskyblue;
+    }
+  }
+
+  &.delete {
+    &:hover {
+      background-color: lightcoral
+    }
+  }
+}
+
+.tableDataHeader {
+  th {
+    text-align: center;
+  }
+}

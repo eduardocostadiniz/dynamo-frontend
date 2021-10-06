@@ -1,0 +1,53 @@
+
+.text {
+    padding: 5px;
+    margin: 2px;
+}
+
+.defaultText {
+   font-size: 14px;
+}
+
+.smallText {
+    font-size: 12px;
+}
+
+.bigText {
+    font-size: 20px;
+}
+
+.infoText {
+    color: #424949;
+}
+
+.successText {
+    color:  #3EA33C;
+}
+
+.warningText {
+    color: #CEDD36;
+}
+
+.dangerText {
+    color: #DD3636;
+}
+
+.primaryText {
+    color: royalblue;
+}
+
+.leftText {
+    text-align: left;
+}
+
+.rightText {
+    text-align: right;
+}
+
+.centerText {
+    text-align: center;
+}
+
+.justifyText {
+    text-align: justify;
+}

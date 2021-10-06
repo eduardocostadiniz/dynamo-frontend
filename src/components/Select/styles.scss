@@ -1,0 +1,26 @@
+
+.selectContainer {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  label {
+    text-align: left;
+    font-weight: 400;
+    font-size: 13px;
+    color: #333;
+    margin-bottom: 7px;
+  }
+
+  select {
+    color: #555;
+    border: none;
+    height: 30px;
+    border-radius: 5px;
+    outline: none;
+
+    &:focus, &:focus-visible {
+      border-radius: 0px;
+    }
+  }
+}
