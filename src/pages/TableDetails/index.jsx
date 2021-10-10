@@ -36,6 +36,7 @@ function TableDetails() {
   return (
     <div>
       <LinkWrapper href='/tables' type='primary'>HOME</LinkWrapper>
+      <LinkWrapper href={`/tables/item/${name}`} type='primary'>Novo Item</LinkWrapper>
       <div className='containerDetails'>
         <TableInfo tableInfo={tableInfo} />
         <TableData tableKeys={tableKeys} tableName={name} />

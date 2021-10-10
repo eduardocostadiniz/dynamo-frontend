@@ -1,21 +1,23 @@
 
-import styles from './Button.module.css'
+import './styles.scss'
 
 const CONFIG_COLOR = {
-    primary: styles.primaryButton,
-    danger: styles.dangerButton,
-    default: ''
+  primary: 'primaryButton',
+  danger: 'dangerButton',
+  default: ''
 }
 
 const CONFIG_SIZE = {
-    default: styles.defaultButton,
-    small: styles.smallButton
+  default: 'defaultButton',
+  small: 'smallButton'
 }
 
-export default function Button({onClick, children, size='default', layout='default'}) {
-    return (
-        <button className={`${styles.button} ${CONFIG_SIZE[size]} ${CONFIG_COLOR[layout]}`} onClick={onClick}>
-            {children}
-        </button>
-    )
+function Button({ children, size = 'default', layout = 'default', ...props }) {
+  return (
+    <button className={`${CONFIG_SIZE[size]} ${CONFIG_COLOR[layout]}`} {...props}>
+      {children}
+    </button>
+  )
 }
+
+export { Button }

@@ -10,6 +10,8 @@ let config = {
 AWS.config.update(config)
 let DynamoDB = new AWS.DynamoDB()
 
+const marshall = (data) => AWS.DynamoDB.Converter.marshall(data)
+
 const unmarshall = (data) => AWS.DynamoDB.Converter.unmarshall(data)
 
-export {DynamoDB, unmarshall}
+export {DynamoDB, marshall, unmarshall}

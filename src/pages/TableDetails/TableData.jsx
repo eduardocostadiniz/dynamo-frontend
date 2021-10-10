@@ -8,8 +8,10 @@ import './styles.scss'
 
 import { useEffect, useState } from 'react'
 import tablesService from '../../services/tables'
+import { useHistory } from 'react-router'
 
 function TableData({ tableKeys, tableName }) {
+  let history = useHistory()
   const [tableData, setTableData] = useState([])
 
   useEffect(() => {
@@ -62,8 +64,35 @@ function TableData({ tableKeys, tableName }) {
     return text
   }
 
-  function copyToClipboard(text) {
-    window.navigator.clipboard.writeText(text)
+  function copyToClipboard(data) {
+    window.navigator.clipboard.writeText(JSON.stringify(data))
+  }
+
+  function handleEditItem(data) {
+    history.push(`/tables/item/${tableName}`)
+  }
+
+  function buildKeyData(hashKey, rangeKey, data) {
+    const hashIdItem = data[hashKey]
+    const rangeIdItem = data[rangeKey]
+    const keyData = {}
+    keyData[hashKey] = hashIdItem
+    if (rangeKey) {
+      keyData[rangeKey] = rangeIdItem
+    }
+    return keyData
+  }
+
+  async function handleDeleteItem(hashKey, rangeKey, data) {
+    const answer = window.confirm(`Deseja realmente excluir o item da tabela ${tableName}?`)
+    if (answer) {
+      const keyData = buildKeyData(hashKey, rangeKey, data)      
+      const deleted = await tablesService.deleteItem(tableName, keyData)
+      if (deleted) {
+        const registers = await tablesService.scanData(tableName)
+        setTableData(registers)
+      }
+    }
   }
 
   function renderBodyItems(data) {
@@ -80,9 +109,9 @@ function TableData({ tableKeys, tableName }) {
         {renderItem(dataText)}
         <TableBodyItem>
           <Text className='svgActions'>
-            {renderSVG(svgCopy, 'Copiar', () => copyToClipboard(dataText))}
-            {renderSVG(svgEdit, 'Editar', () => alert('Editar'), 'edit')}
-            {renderSVG(svgDelete, 'Excluir', () => alert('Deletar'), 'delete')}
+            {renderSVG(svgCopy, 'Copiar', () => copyToClipboard(data))}
+            {renderSVG(svgEdit, 'Editar', () => handleEditItem(data), 'edit')}
+            {renderSVG(svgDelete, 'Excluir', () => handleDeleteItem(hashKey, rangeKey, data), 'delete')}
           </Text>
         </TableBodyItem>
       </TableRow>
