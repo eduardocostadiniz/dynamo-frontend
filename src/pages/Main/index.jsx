@@ -5,7 +5,7 @@ import tablesService from '../../services/tables'
 import './styles.scss'
 
 import Text from '../../components/Text'
-import Button from '../../components/Button'
+import {Button} from '../../components/Button'
 import { LinkWrapper } from '../../components/Anchors'
 import { Table, TableRow, TableHead, TableHeadItem, TableBody, TableBodyItem } from '../../components/Table'
 

@@ -1,0 +1,45 @@
+
+.defaultButton {
+  width: 100px;
+  height: 35px;
+}
+
+.smallButton {
+  width: 70px;
+  height: 20px;
+}
+
+.primaryButton {
+  background-color: royalblue;
+  color: white;
+}
+
+.dangerButton {
+  background-color: rgb(199, 33, 33);
+  color: white;
+}
+
+.button:hover {
+  opacity: 0.85;
+}
+
+button {
+  width: 100%;
+  height: 30px;
+  margin-top: 10px;
+  background-color: royalblue;
+  color: white;
+  border: none;
+  border-radius: 5px;
+
+  &:hover {
+    opacity: 0.85;
+    cursor: pointer;
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    background-color: #BBB;
+    cursor: not-allowed;
+  }
+}

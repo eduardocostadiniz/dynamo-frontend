@@ -1,6 +1,6 @@
 import 'isomorphic-fetch'
 
-import { DynamoDB, unmarshall } from '../providers/aws'
+import { DynamoDB, marshall, unmarshall } from '../providers/aws'
 
 const tablesService = {
   listTables: async function () {
@@ -66,7 +66,33 @@ const tablesService = {
       console.error(err)
     }
   },
-  listData: async function (tableName,) {
+  manageItem: async function (tableName, item) {
+    try {
+      const params = {
+        TableName: tableName,
+        'Item': marshall(item)
+      }
+      await DynamoDB.putItem(params).promise()
+      return true
+    } catch (err) {
+      console.error(err, err.stack)
+    }    
+  },
+  deleteItem: async function (tableName, keyData) {
+    try {
+      const params = {
+        TableName: tableName,
+        'Key': marshall(keyData)
+      }
+      console.log('params')
+      console.log(params)
+      await DynamoDB.deleteItem(params).promise()
+      return true
+    } catch (err) {
+      console.error(err, err.stack)
+    }    
+  },
+  listData: async function (tableName) {
     try {
       const params = {
         ExpressionAttributeValues: {
@@ -81,7 +107,7 @@ const tablesService = {
       console.error(err)
     }
   },
-  scanData: async function (tableName,) {
+  scanData: async function (tableName) {
     try {
       const params = {
         TableName: tableName
