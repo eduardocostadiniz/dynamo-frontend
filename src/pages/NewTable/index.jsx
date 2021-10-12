@@ -11,6 +11,7 @@ import './styles.scss'
 import { Option, Select } from '../../components/Select'
 
 import tablesService from '../../services/tables'
+import { customToast } from '../../components/CustomToast'
 
 
 function TypeSelect({ ...props }) {
@@ -81,14 +82,13 @@ function NewTable() {
 
     try {
       await tablesService.createTable(payload)
+      customToast.success('Tabela inserida com sucesso!!!')
       setTimeout(function() {
-        setLoading(false)
         history.push('/tables')
-      }, 1000)
+      }, 2000)
     } catch (error) {
-      console.log(error)
-    } finally {
       setLoading(false)
+      customToast.error(`Erro ao inserir a tabela: ${error.message}`)
     }
   }
 

@@ -68,8 +68,12 @@ function TableData({ tableKeys, tableName }) {
     window.navigator.clipboard.writeText(JSON.stringify(data))
   }
 
-  function handleEditItem(data) {
-    history.push(`/tables/item/${tableName}`)
+  function handleEditItem(hashKey, rangeKey, data) {
+    const keyData = buildKeyData(hashKey, rangeKey, data)  
+    history.push({
+      pathname: `/tables/item/${tableName}`,
+      state: keyData
+    })
   }
 
   function buildKeyData(hashKey, rangeKey, data) {
@@ -110,7 +114,7 @@ function TableData({ tableKeys, tableName }) {
         <TableBodyItem>
           <Text className='svgActions'>
             {renderSVG(svgCopy, 'Copiar', () => copyToClipboard(data))}
-            {renderSVG(svgEdit, 'Editar', () => handleEditItem(data), 'edit')}
+            {renderSVG(svgEdit, 'Editar', () => handleEditItem(hashKey, rangeKey, data), 'edit')}
             {renderSVG(svgDelete, 'Excluir', () => handleDeleteItem(hashKey, rangeKey, data), 'delete')}
           </Text>
         </TableBodyItem>

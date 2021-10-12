@@ -9,6 +9,7 @@ const tablesService = {
       return response.TableNames || []
     } catch (err) {
       console.error(err)
+      throw err
     }
   },
   describeTable: async function (tableName) {
@@ -17,6 +18,7 @@ const tablesService = {
       return response.Table || {}
     } catch (err) {
       console.error(err)
+      throw err
     }
   },
   createTable: async function (data) {
@@ -56,6 +58,7 @@ const tablesService = {
       return true
     } catch (err) {
       console.error(err)
+      throw err
     }
   },
   deleteTable: async function (tableName) {
@@ -64,6 +67,7 @@ const tablesService = {
       return true
     } catch (err) {
       console.error(err)
+      throw err
     }
   },
   manageItem: async function (tableName, item) {
@@ -75,7 +79,8 @@ const tablesService = {
       await DynamoDB.putItem(params).promise()
       return true
     } catch (err) {
-      console.error(err, err.stack)
+      console.error(err)
+      throw err
     }    
   },
   deleteItem: async function (tableName, keyData) {
@@ -84,28 +89,25 @@ const tablesService = {
         TableName: tableName,
         'Key': marshall(keyData)
       }
-      console.log('params')
-      console.log(params)
       await DynamoDB.deleteItem(params).promise()
       return true
     } catch (err) {
-      console.error(err, err.stack)
+      console.error(err)
+      throw err
     }    
   },
-  listData: async function (tableName) {
+  getItem: async function (tableName, keyData) {
     try {
       const params = {
-        ExpressionAttributeValues: {
-          ':id': { S: 'KEY' }
-        },
-        KeyConditionExpression: 'id = :id',
-        TableName: tableName
+        TableName: tableName,
+        'Key': marshall(keyData)
       }
-      const response = await DynamoDB.query(params).promise()
-      return (response.Items || []).map(dt => unmarshall(dt))
+      const response = await DynamoDB.getItem(params).promise()
+      return unmarshall(response.Item || {})
     } catch (err) {
       console.error(err)
-    }
+      throw err
+    }    
   },
   scanData: async function (tableName) {
     try {
@@ -116,6 +118,7 @@ const tablesService = {
       return (response.Items || []).map(dt => unmarshall(dt))
     } catch (err) {
       console.error(err)
+      throw err
     }
   }
 }

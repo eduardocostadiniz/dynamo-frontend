@@ -5,7 +5,8 @@ import './styles.scss'
 
 function TableInfo({ tableInfo }) {
   const TYPE_MAPPING = {
-    S: 'String'
+    S: 'String',
+    N: 'Número'
   }
 
   function formatDateTime(datetime) {
