@@ -83,7 +83,7 @@ function NewTable() {
     try {
       await tablesService.createTable(payload)
       customToast.success('Tabela inserida com sucesso!!!')
-      setTimeout(function() {
+      setTimeout(function () {
         history.push('/tables')
       }, 2000)
     } catch (error) {

@@ -26,7 +26,7 @@ function TableInfo({ tableInfo }) {
         {tableInfo && tableInfo.KeySchema.map(el =>
           <span key={el.AttributeName}>
             {el.KeyType}: <i>{el.AttributeName}</i> &nbsp;
-              </span>
+          </span>
         )}
       </Text>
       <Text>
@@ -34,13 +34,13 @@ function TableInfo({ tableInfo }) {
         {tableInfo && tableInfo.AttributeDefinitions.map(el =>
           <span key={el.AttributeName}>
             {el.AttributeName}: <i>{TYPE_MAPPING[el.AttributeType]}</i> &nbsp;
-              </span>
+          </span>
         )}
       </Text>
       <Text>
         <strong>Unidades de capacidade: </strong>
-          [Leitura]&rarr;{tableInfo && tableInfo.ProvisionedThroughput.ReadCapacityUnits} |
-          [Escrita]:&rarr;{tableInfo && tableInfo.ProvisionedThroughput.ReadCapacityUnits}
+        [Leitura]&rarr;{tableInfo && tableInfo.ProvisionedThroughput.ReadCapacityUnits} |
+        [Escrita]:&rarr;{tableInfo && tableInfo.ProvisionedThroughput.ReadCapacityUnits}
       </Text>
     </div>
   )

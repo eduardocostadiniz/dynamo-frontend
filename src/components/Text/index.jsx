@@ -1,25 +1,25 @@
 
-import styles from './Text.module.css'
+import './styles.scss'
 
 const CONFIG_COLOR = {
-  success: styles.successText,
-  warning: styles.warningText,
-  danger: styles.dangerText,
-  primary: styles.primaryText,
-  default: styles.infoText
+  success: 'successText',
+  warning: 'warningText',
+  danger: 'dangerText',
+  primary: 'primaryText',
+  default: 'infoText'
 }
 
 const CONFIG_SIZE = {
-  big: styles.bigText,
-  default: styles.defaultText,
-  small: styles.smallText
+  big: 'bigText',
+  default: 'defaultText',
+  small: 'smallText'
 }
 
 const CONFIG_ALIGN = {
-  left: styles.leftText,
-  right: styles.rightText,
-  center: styles.centerText,
-  justify: styles.justifyText
+  left: 'leftText',
+  right: 'rightText',
+  center: 'centerText',
+  justify: 'justifyText'
 }
 
 const transformText = (value, strong, italic) => {
@@ -35,7 +35,7 @@ const transformText = (value, strong, italic) => {
   return value
 }
 
-export default function Text({ children, className = styles.text, strong, italic, size = 'default', layout = 'default', align = 'left' }) {
+export default function Text({ children, className = 'text', strong, italic, size = 'default', layout = 'default', align = 'left' }) {
   return (
     <div className={`${className} ${CONFIG_SIZE[size]} ${CONFIG_COLOR[layout]} ${CONFIG_ALIGN[align]}`}>
       {transformText(children, strong, italic)}

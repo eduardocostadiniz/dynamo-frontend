@@ -15,7 +15,12 @@ import './styles.scss'
 const DEFAULT_AREA_WIDTH = '600px'
 const DEFAULT_AREA_HEIGHT = '500px'
 
-function JSONItemEditor({ item, onEditorChange }) {
+function JSONItemEditor({ item, handleSetItem, handleSetHasError }) {
+  function handleEditorChange(value) {
+    handleSetItem(value.jsObject)
+    handleSetHasError(!!value.error)
+  }
+
   return (
     <div>
       <JSONInput
@@ -24,7 +29,7 @@ function JSONItemEditor({ item, onEditorChange }) {
         locale={locale}
         confirmGood={false}
         waitAfterKeyPress={1500}
-        onChange={onEditorChange}
+        onChange={handleEditorChange}
         width={DEFAULT_AREA_WIDTH}
         height={DEFAULT_AREA_HEIGHT}
       />
@@ -32,10 +37,10 @@ function JSONItemEditor({ item, onEditorChange }) {
   )
 }
 
-function ButtonHandler({hasError, item, handleManageItem, feedback}) {
+function ButtonHandler({ hasError, item, handleManageItem }) {
   return (
     <Button
-      onClick={() => handleManageItem(item, feedback)}
+      onClick={handleManageItem}
       disabled={hasError || (item && Object.keys(item).length === 0)}
     >
       Salvar
@@ -43,63 +48,34 @@ function ButtonHandler({hasError, item, handleManageItem, feedback}) {
   )
 }
 
-function NewItem({ table, handleManageItem }) {
-  let [item, setItem] = useState({})
-  let [hasError, setHasError] = useState(false)
-
-  function handleEditorChange(value) {
-    setItem(value.jsObject)
-    setHasError(!!value.error)
-  }
-
-  return (
-    <div className='itemContainer'>
-      <p>Novo Item em <strong>{table}</strong></p>
-      <JSONItemEditor item={item} onEditorChange={handleEditorChange} />
-      <ButtonHandler hasError={hasError} item={item} handleManageItem={handleManageItem} feedback='inserido' />
-    </div>
-  )
-}
-
-function UpdateItem({ data, table, handleManageItem }) {
+function Item() {
+  let history = useHistory()
+  let { table } = useParams()
+  const { keyData } = useLocation()
   let [item, setItem] = useState({})
   let [hasError, setHasError] = useState(false)
 
   useEffect(() => {
     async function getItem() {
-      const item = await tablesService.getItem(table, data)
+      const item = await tablesService.getItem(table, keyData)
       setItem(item)
     }
-    getItem()
+
+    if (!!keyData) {
+      // apenas atualiza com dados se passar parâmetros de chaves
+      getItem()
+    }
 
     return () => {
       setItem({})
+      setHasError(false)
     }
-  }, [data, table])
+  }, [keyData, table])
 
-  function handleEditorChange(value) {
-    setItem(value.jsObject)
-    setHasError(!!value.error)
-  }
-
-  return (
-    <div className='itemContainer'>
-      <p>Atualizando Item em <strong>{table}</strong></p>
-      <JSONItemEditor item={item} onEditorChange={handleEditorChange} />
-      <ButtonHandler hasError={hasError} item={item} handleManageItem={handleManageItem} feedback='atualizado' />
-    </div>
-  )
-}
-
-function Item() {
-  let history = useHistory()
-  let { table } = useParams()
-  const { state } = useLocation()
-
-  async function handleManageItem(item, operation) {
+  async function handleManageItem() {
     try {
       await tablesService.manageItem(table, item)
-      customToast.success(`Item ${operation} com sucesso!!!`)
+      customToast.success('Os dados foram salvos com sucesso!')
       setTimeout(function () {
         history.push(`/tables/details/${table}`)
       }, 2000)
@@ -109,12 +85,15 @@ function Item() {
   }
 
   return (
-    !!state ?
-      <UpdateItem data={state} table={table} handleManageItem={handleManageItem} /> :
-      <NewItem handleManageItem={handleManageItem} table={table} />
+    <div className='itemContainer'>
+      <p>Item em <strong>{table}</strong></p>
+      <p className='itemWarning'>
+        <strong>Atenção:</strong>Aguarde 2 segundos após editar para o JSON ser validado.
+      </p>
+      <JSONItemEditor item={item} handleSetItem={setItem} handleSetHasError={setHasError} />
+      <ButtonHandler hasError={hasError} item={item} handleManageItem={handleManageItem} />
+    </div>
   )
 }
-
-// TODO: Averiguar se há uma forma de melhorar a questão de passagem de parametros em cascata
 
 export { Item }

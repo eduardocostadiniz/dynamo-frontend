@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom'
 
-import styles from './Anchors.module.css'
+import './styles.scss'
 
 const CONFIG_TYPE = {
-  primary: styles.linkPrimaryButton,
-  danger: styles.linkDangerButton,
-  default: styles.defaultLink
+  primary: 'linkPrimaryButton',
+  danger: 'linkDangerButton',
+  default: 'defaultLink',
+  none: ''
 }
 
 export function LinkWrapper({ children, href, type = 'default', ...props }) {
@@ -16,7 +17,7 @@ export function LinkWrapper({ children, href, type = 'default', ...props }) {
   )
 }
 
-export function RawLink({ children, type = 'default', ...props }) {
+export function RawLink({ children, type = 'none', ...props }) {
   return (
     <a className={CONFIG_TYPE[type]} {...props}>{children}</a>
   )

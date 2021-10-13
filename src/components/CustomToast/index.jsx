@@ -7,13 +7,13 @@ const customToast = {
   success: function (message) {
     toast.success(message)
   },
-  error: function(message) {
+  error: function (message) {
     toast.error(message)
   },
-  warning: function(message) {
+  warning: function (message) {
     toast.warn(message)
   },
-  info: function(message) {
+  info: function (message) {
     toast.info(message)
   }
 }
@@ -22,8 +22,8 @@ function CustomToastContainer() {
   return (
     <ToastContainer
       position={toast.POSITION.BOTTOM_CENTER}
-      autoClose={4000}
-      closeButton={false}      
+      autoClose={3000}
+      closeButton={false}
     />
   )
 }

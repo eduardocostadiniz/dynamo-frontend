@@ -9,6 +9,7 @@ import './styles.scss'
 import { useEffect, useState } from 'react'
 import tablesService from '../../services/tables'
 import { useHistory } from 'react-router'
+import { customToast } from '../../components/CustomToast'
 
 function TableData({ tableKeys, tableName }) {
   let history = useHistory()
@@ -66,13 +67,14 @@ function TableData({ tableKeys, tableName }) {
 
   function copyToClipboard(data) {
     window.navigator.clipboard.writeText(JSON.stringify(data))
+    customToast.info('Dados copiados!')
   }
 
   function handleEditItem(hashKey, rangeKey, data) {
-    const keyData = buildKeyData(hashKey, rangeKey, data)  
+    const keyData = buildKeyData(hashKey, rangeKey, data)
     history.push({
       pathname: `/tables/item/${tableName}`,
-      state: keyData
+      keyData
     })
   }
 
@@ -90,8 +92,9 @@ function TableData({ tableKeys, tableName }) {
   async function handleDeleteItem(hashKey, rangeKey, data) {
     const answer = window.confirm(`Deseja realmente excluir o item da tabela ${tableName}?`)
     if (answer) {
-      const keyData = buildKeyData(hashKey, rangeKey, data)      
+      const keyData = buildKeyData(hashKey, rangeKey, data)
       const deleted = await tablesService.deleteItem(tableName, keyData)
+      customToast.success('Registro apagado!')
       if (deleted) {
         const registers = await tablesService.scanData(tableName)
         setTableData(registers)

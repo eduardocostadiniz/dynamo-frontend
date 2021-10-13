@@ -1,8 +1,13 @@
 
-import styles from './Footer.module.css'
+import { RawLink } from '../Anchors'
+import './styles.scss'
+
 
 export default function Footer() {
-    return (
-        <footer className={styles.footer}>Desenvolvido por <i>Eduardo Costa Diniz</i></footer>
-    )
+  const USER_GITHUB_ADDRESS = 'https://github.com/eduardocostadiniz'
+  return (
+    <footer>
+      Desenvolvido por <i><RawLink href={USER_GITHUB_ADDRESS}>Eduardo Costa Diniz</RawLink></i>
+    </footer>
+  )
 }

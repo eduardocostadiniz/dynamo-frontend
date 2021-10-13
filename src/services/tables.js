@@ -1,4 +1,3 @@
-import 'isomorphic-fetch'
 
 import { DynamoDB, marshall, unmarshall } from '../providers/aws'
 
@@ -54,8 +53,7 @@ const tablesService = {
         })
       }
 
-      await DynamoDB.createTable(params).promise()
-      return true
+      return await DynamoDB.createTable(params).promise()
     } catch (err) {
       console.error(err)
       throw err
@@ -63,8 +61,7 @@ const tablesService = {
   },
   deleteTable: async function (tableName) {
     try {
-      await DynamoDB.deleteTable({TableName: tableName}).promise()
-      return true
+      return await DynamoDB.deleteTable({ TableName: tableName }).promise()
     } catch (err) {
       console.error(err)
       throw err
@@ -76,12 +73,11 @@ const tablesService = {
         TableName: tableName,
         'Item': marshall(item)
       }
-      await DynamoDB.putItem(params).promise()
-      return true
+      return await DynamoDB.putItem(params).promise()
     } catch (err) {
       console.error(err)
       throw err
-    }    
+    }
   },
   deleteItem: async function (tableName, keyData) {
     try {
@@ -89,12 +85,11 @@ const tablesService = {
         TableName: tableName,
         'Key': marshall(keyData)
       }
-      await DynamoDB.deleteItem(params).promise()
-      return true
+      return await DynamoDB.deleteItem(params).promise()
     } catch (err) {
       console.error(err)
       throw err
-    }    
+    }
   },
   getItem: async function (tableName, keyData) {
     try {
@@ -107,7 +102,7 @@ const tablesService = {
     } catch (err) {
       console.error(err)
       throw err
-    }    
+    }
   },
   scanData: async function (tableName) {
     try {

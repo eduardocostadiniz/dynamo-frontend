@@ -8,6 +8,7 @@ import Text from '../../components/Text'
 import { Button } from '../../components/Button'
 import { LinkWrapper } from '../../components/Anchors'
 import { Table, TableRow, TableHead, TableHeadItem, TableBody, TableBodyItem } from '../../components/Table'
+import { customToast } from '../../components/CustomToast'
 
 function NoData() {
   return (
@@ -26,7 +27,9 @@ export default function Content() {
   useEffect(() => {
     handleListTables()
 
-    return setTables([])
+    return () => {
+      setTables([])
+    }
   }, [])
 
   async function handleDeleteTable(tableName) {
@@ -37,10 +40,11 @@ export default function Content() {
       }
 
       await tablesService.deleteTable(tableName)
+      customToast.success(`Tabela ${tableName} excluída com sucesso!`)
       handleListTables()
 
     } catch (error) {
-      console.log(error)
+      customToast.error(error.message)
     }
   }
 

@@ -7,7 +7,20 @@
     color: #333;
   }
 
+  .itemWarning {
+    background-color: #FADA5E;
+    color: #333;
+    padding: 12px 5px;
+    font-size: 12px;
+    border-radius: 3px;
+    opacity: 0.9;
+  }
+
   div {
     margin-bottom: 10px;
+  }
+
+  button {
+    width: 100%;
   }
 }

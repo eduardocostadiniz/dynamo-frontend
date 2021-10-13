@@ -3,7 +3,7 @@
 import './styles.scss'
 
 
-function Option({children, ...props}) {
+function Option({ children, ...props }) {
   return (
     <option {...props}>{children}</option>
   )
